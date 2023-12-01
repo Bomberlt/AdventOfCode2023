@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { input as day1Input } from "../inputs/day1input.ts";
+import Day from "./Day.tsx";
 
 export const calibrationValue = (lineOfText: string): number => {
   const letters = lineOfText.split("");
@@ -186,82 +187,58 @@ const Day1 = () => {
 
   return (
     <div>
-      Day1
-      {part === 2 && <span> Part 2</span>}
-      <div>
-        <span>
-          <label>
-            <input
-              type="radio"
-              value="1"
-              checked={part === 1}
-              onChange={() => setPart(1)}
-            />
-            Part 1
-          </label>
-        </span>
-        <span>
-          <label>
-            <input
-              type="radio"
-              value="2"
-              checked={part === 2}
-              onChange={() => setPart(2)}
-            />
-            Part 2
-          </label>
-        </span>
-      </div>
-      <div className="container">
-        <div className="container-rows">
-          {recoveredDocument.length > 0 && (
+      <Day dayNumber={1} part={part} setPart={setPart}>
+        <div className="container">
+          <div className="container-rows">
+            {recoveredDocument.length > 0 && (
+              <>
+                <div>Recovered calibration document: </div>
+                <div className="document">
+                  {recoveredDocument.map((line, i) => (
+                    <span key={i}>{line} + </span>
+                  ))}
+                </div>
+              </>
+            )}
+            <div>The newly-improved calibration document: </div>
+            <div className="document non-flex">
+              {document.map((line, i) => (
+                <div key={i}>{line}</div>
+              ))}
+            </div>
+          </div>
+          <div className="container-rows">
+            <button
+              onClick={() => recoverCalibarationValues()}
+              disabled={recovered}
+            >
+              Recover calibration values
+            </button>
+            <button onClick={() => getAnswer()} disabled={answer !== undefined}>
+              Calculate sum of all of the calibration values
+            </button>
+            <button
+              onClick={() => recoverCalibarationValuesInteractively()}
+              disabled={recoveredI}
+            >
+              Recover calibration values interactively
+            </button>
+            <button
+              onClick={() => getAnswerInter()}
+              disabled={answer !== undefined}
+            >
+              Calculate sum of all of the calibration values interactively
+            </button>
             <>
-              <div>Recovered calibration document: </div>
-              <div className="document">
-                {recoveredDocument.map((line, i) => (
-                  <span key={i}>{line} + </span>
-                ))}
-              </div>
+              {part === 1 ? (
+                <div>Answer = {answer}</div>
+              ) : (
+                <div>Part 2 answer = {part2answer(day1Input)}</div>
+              )}
             </>
-          )}
-          <div>The newly-improved calibration document: </div>
-          <div className="document non-flex">
-            {document.map((line, i) => (
-              <div key={i}>{line}</div>
-            ))}
           </div>
         </div>
-        <div className="container-rows">
-          <button
-            onClick={() => recoverCalibarationValues()}
-            disabled={recovered}
-          >
-            Recover calibration values
-          </button>
-          <button
-            onClick={() => recoverCalibarationValuesInteractively()}
-            disabled={recoveredI}
-          >
-            Recover calibration values interactively
-          </button>
-          <button onClick={() => getAnswer()} disabled={answer !== undefined}>
-            Calculate sum of all of the calibration values
-          </button>
-          <button
-            onClick={() => getAnswerInter()}
-            disabled={answer !== undefined}
-          >
-            Calculate sum of all of the calibration values interactively
-          </button>
-          <>
-            {part === 1 ? (
-              <div>Answer = {answer}</div>
-            ) : (
-              <div>Part 2 answer = {part2answer(day1Input)}</div>
-            )}
-          </>
-        </div>
-      </div>
+      </Day>
     </div>
   );
 };
