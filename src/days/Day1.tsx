@@ -121,29 +121,48 @@ export const part1answer = (input: string) => {
 
 const Day1 = () => {
   const [part, setPart] = useState(1);
-  const [document, setDocument] = useState(day1Input);
+  const [document, setDocument] = useState(day1Input.split("\n"));
+  //const [document, setDocument] = useState(day1Input.map((lineOfText) => {}));
   const [recovered, setRecovered] = useState(false);
-  const [answer, setAnswer] = useState();
+  const [answer, setAnswer] = useState<number | undefined>();
   const recoverCalibarationValues = () => {
     if (!recovered) {
       console.log("recovering...");
-      const lines = document.split("\n");
       setDocument(
-        lines.map((lineOfText) => calibrationValue(lineOfText)).join("\n")
+        document.map((lineOfText) => calibrationValue(lineOfText).toString())
       );
       setRecovered(true);
     }
   };
 
+  const recoverOneLine = (arr: string[], index: number) => {
+    const newArr = [...arr];
+    newArr[index] = calibrationValue(arr[index]).toString();
+    setDocument(newArr);
+    console.log(`recovering ${index} line...`);
+    if (index < document.length - 1) {
+      const wait = index < 100 ? 50 : 1;
+      setTimeout(function () {
+        recoverOneLine(newArr, index + 1);
+      }, wait);
+    } else {
+      setRecovered(true);
+    }
+  };
+  const recoverCalibarationValuesInteractively = () => {
+    if (!recovered) {
+      recoverOneLine(document, 0);
+      console.log("recovering interactively...");
+    }
+  };
+
   const getAnswer = () => {
     setAnswer(
-      document
-        .split("\n")
-        .reduce(
-          (previousValue: number, currentValue: string) =>
-            previousValue + parseInt(currentValue),
-          0
-        )
+      document.reduce(
+        (previousValue: number, currentValue: string) =>
+          previousValue + parseInt(currentValue),
+        0
+      )
     );
   };
 
@@ -176,11 +195,11 @@ const Day1 = () => {
         </span>
       </div>
       <div className="container">
-        <div className="container-rows document">
+        <div className="container-rows">
           <div>The newly-improved calibration document: </div>
-          <div>
-            {document.split("\n").map((line) => (
-              <div key={line}>{line}</div>
+          <div className="document">
+            {document.map((line, i) => (
+              <div key={i}>{line}</div>
             ))}
           </div>
         </div>
@@ -190,6 +209,12 @@ const Day1 = () => {
             disabled={recovered}
           >
             Recover calibration values
+          </button>
+          <button
+            onClick={() => recoverCalibarationValuesInteractively()}
+            disabled={recovered}
+          >
+            Recover calibration values interactively
           </button>
           <button onClick={() => getAnswer()} disabled={answer !== undefined}>
             Calculate sum of all of the calibration values
