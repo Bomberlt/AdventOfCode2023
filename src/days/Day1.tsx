@@ -121,6 +121,19 @@ export const part1answer = (input: string) => {
 
 const Day1 = () => {
   const [part, setPart] = useState(1);
+  const [document, setDocument] = useState(day1Input);
+  const [recovered, setRecovered] = useState(false);
+  const recoverCalibarationValues = () => {
+    if (!recovered) {
+      console.log("recovering...");
+      const lines = document.split("\n");
+      setDocument(
+        lines.map((lineOfText) => calibrationValue(lineOfText)).join("\n")
+      );
+      setRecovered(true);
+    }
+  };
+
   return (
     <div>
       Day1
@@ -149,13 +162,33 @@ const Day1 = () => {
           </label>
         </span>
       </div>
-      <>
-        {part === 1 ? (
-          <div>Answer = {part1answer(day1Input)}</div>
-        ) : (
-          <div>Part 2 answer = {part2answer(day1Input)}</div>
-        )}
-      </>
+      <div className="container">
+        <div className="container-rows document">
+          <div>The newly-improved calibration document: </div>
+          <div>
+            {document.split("\n").map((line) => (
+              <div key={line}>{line}</div>
+            ))}
+          </div>
+        </div>
+        <div className="container-rows">
+          <div>
+            <button
+              onClick={() => recoverCalibarationValues()}
+              disabled={recovered}
+            >
+              Recover calibration values
+            </button>
+          </div>
+          <>
+            {part === 1 ? (
+              <div>Answer = {part1answer(day1Input)}</div>
+            ) : (
+              <div>Part 2 answer = {part2answer(day1Input)}</div>
+            )}
+          </>
+        </div>
+      </div>
     </div>
   );
 };

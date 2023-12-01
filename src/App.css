@@ -40,3 +40,26 @@
 .read-the-docs {
   color: #888;
 }
+
+.container {
+  display: flex; /* or inline-flex */
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  gap: 10%;
+}
+
+.container div {
+  text-wrap: nowrap;
+}
+
+.container-rows {
+  display: flex; /* or inline-flex */
+  flex-direction: column;
+}
+
+.document {
+  flex-grow: 0;
+  max-width: 50%;
+  max-width: 50%;
+}
