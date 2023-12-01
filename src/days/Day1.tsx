@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { input as day1Input } from "../inputs/day1input.ts";
 
 export const calibrationValue = (lineOfText: string): number => {
@@ -120,11 +120,42 @@ export const part1answer = (input: string) => {
 };
 
 const Day1 = () => {
+  const [part, setPart] = useState(1);
   return (
     <div>
       Day1
-      <div>Answer = {part1answer(day1Input)}</div>
-      <div>Part 2 answer = {part2answer(day1Input)}</div>
+      {part === 2 && <span> Part 2</span>}
+      <div>
+        <span>
+          <label>
+            <input
+              type="radio"
+              value="1"
+              checked={part === 1}
+              onChange={() => setPart(1)}
+            />
+            Part 1
+          </label>
+        </span>
+        <span>
+          <label>
+            <input
+              type="radio"
+              value="2"
+              checked={part === 2}
+              onChange={() => setPart(2)}
+            />
+            Part 2
+          </label>
+        </span>
+      </div>
+      <>
+        {part === 1 ? (
+          <div>Answer = {part1answer(day1Input)}</div>
+        ) : (
+          <div>Part 2 answer = {part2answer(day1Input)}</div>
+        )}
+      </>
     </div>
   );
 };
