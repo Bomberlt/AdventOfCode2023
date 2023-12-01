@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 
-import { input as day1Input } from "../inputs/day1input.ts";
+import { input as day1Input } from "../inputs/day12022input.ts";
 
 const elfsCaloriesTotals = (input) => {
   const allCalories = input
