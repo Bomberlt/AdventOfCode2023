@@ -122,7 +122,7 @@ export const part1answer = (input: string) => {
 const Day1 = () => {
   const [part, setPart] = useState(1);
   const [document, setDocument] = useState(day1Input.split("\n"));
-  const [recoveredDocument, setRecoveredDocument] = useState([]);
+  const [recoveredDocument, setRecoveredDocument] = useState<number[]>([]);
   const [recovered, setRecovered] = useState(false);
   const [recoveredI, setRecoveredI] = useState(false);
   const [answer, setAnswer] = useState<number | undefined>();
@@ -166,6 +166,23 @@ const Day1 = () => {
       )
     );
   };
+  const sumTwo = (arr: [], index: number) => {
+    const firstTwo = arr[0] + arr[1];
+    const newArr = [firstTwo, ...arr.slice(2)];
+    setRecoveredDocument(newArr);
+    if (newArr.length > 1) {
+      const wait = index < 100 ? 50 : 0;
+      setTimeout(function () {
+        sumTwo(newArr, index + 1);
+      }, wait);
+    } else {
+      setAnswer(newArr[0]);
+    }
+  };
+
+  const getAnswerInter = () => {
+    sumTwo(recoveredDocument, 0);
+  };
 
   return (
     <div>
@@ -202,7 +219,7 @@ const Day1 = () => {
               <div>Recovered calibration document: </div>
               <div className="document">
                 {recoveredDocument.map((line, i) => (
-                  <span key={i}>{line}; </span>
+                  <span key={i}>{line} + </span>
                 ))}
               </div>
             </>
@@ -229,6 +246,12 @@ const Day1 = () => {
           </button>
           <button onClick={() => getAnswer()} disabled={answer !== undefined}>
             Calculate sum of all of the calibration values
+          </button>
+          <button
+            onClick={() => getAnswerInter()}
+            disabled={answer !== undefined}
+          >
+            Calculate sum of all of the calibration values interactively
           </button>
           <>
             {part === 1 ? (
