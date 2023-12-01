@@ -64,10 +64,17 @@
 .container-rows button {
   margin: 2%;
 }
-
-.document {
+.container .document {
   font-size: small;
+  text-wrap: wrap;
+  display: flex;
+  flex-wrap: wrap;
 }
+
 .document div {
   margin: 0%;
+}
+
+.document.non-flex {
+  display: block;
 }

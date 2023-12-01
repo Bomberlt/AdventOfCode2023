@@ -122,8 +122,9 @@ export const part1answer = (input: string) => {
 const Day1 = () => {
   const [part, setPart] = useState(1);
   const [document, setDocument] = useState(day1Input.split("\n"));
-  //const [document, setDocument] = useState(day1Input.map((lineOfText) => {}));
+  const [recoveredDocument, setRecoveredDocument] = useState([]);
   const [recovered, setRecovered] = useState(false);
+  const [recoveredI, setRecoveredI] = useState(false);
   const [answer, setAnswer] = useState<number | undefined>();
   const recoverCalibarationValues = () => {
     if (!recovered) {
@@ -135,24 +136,24 @@ const Day1 = () => {
     }
   };
 
-  const recoverOneLine = (arr: string[], index: number) => {
-    const newArr = [...arr];
-    newArr[index] = calibrationValue(arr[index]).toString();
-    setDocument(newArr);
+  const recoverOneLine = (arr: [], index: number) => {
+    const recoveredValue = calibrationValue(document[index]);
+    const newArr = [...arr, recoveredValue];
+    setRecoveredDocument(newArr);
     console.log(`recovering ${index} line...`);
     if (index < document.length - 1) {
-      const wait = index < 100 ? 50 : 1;
+      const wait = index < 100 ? 50 : 0;
       setTimeout(function () {
         recoverOneLine(newArr, index + 1);
       }, wait);
     } else {
-      setRecovered(true);
     }
   };
   const recoverCalibarationValuesInteractively = () => {
     if (!recovered) {
-      recoverOneLine(document, 0);
+      setRecoveredI(true);
       console.log("recovering interactively...");
+      recoverOneLine([], 0);
     }
   };
 
@@ -196,8 +197,18 @@ const Day1 = () => {
       </div>
       <div className="container">
         <div className="container-rows">
+          {recoveredDocument.length > 0 && (
+            <>
+              <div>Recovered calibration document: </div>
+              <div className="document">
+                {recoveredDocument.map((line, i) => (
+                  <span key={i}>{line}; </span>
+                ))}
+              </div>
+            </>
+          )}
           <div>The newly-improved calibration document: </div>
-          <div className="document">
+          <div className="document non-flex">
             {document.map((line, i) => (
               <div key={i}>{line}</div>
             ))}
@@ -212,7 +223,7 @@ const Day1 = () => {
           </button>
           <button
             onClick={() => recoverCalibarationValuesInteractively()}
-            disabled={recovered}
+            disabled={recoveredI}
           >
             Recover calibration values interactively
           </button>
