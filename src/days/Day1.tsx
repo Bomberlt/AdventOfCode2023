@@ -127,7 +127,7 @@ const Day1 = () => {
   const [recovered, setRecovered] = useState(false);
   const [recoveredI, setRecoveredI] = useState(false);
   const [answer, setAnswer] = useState<number | undefined>();
-  const recoverCalibarationValues = () => {
+  const recoverCalibrationValues = () => {
     if (!recovered) {
       console.log("recovering...");
       setDocument(
@@ -137,7 +137,7 @@ const Day1 = () => {
     }
   };
 
-  const recoverOneLine = (arr: [], index: number) => {
+  const recoverOneLine = (arr: number[], index: number) => {
     const recoveredValue = calibrationValue(document[index]);
     const newArr = [...arr, recoveredValue];
     setRecoveredDocument(newArr);
@@ -147,10 +147,9 @@ const Day1 = () => {
       setTimeout(function () {
         recoverOneLine(newArr, index + 1);
       }, wait);
-    } else {
     }
   };
-  const recoverCalibarationValuesInteractively = () => {
+  const recoverCalibrationValuesInteractively = () => {
     if (!recovered) {
       setRecoveredI(true);
       console.log("recovering interactively...");
@@ -167,7 +166,7 @@ const Day1 = () => {
       )
     );
   };
-  const sumTwo = (arr: [], index: number) => {
+  const sumTwo = (arr: number[], index: number) => {
     const firstTwo = arr[0] + arr[1];
     const newArr = [firstTwo, ...arr.slice(2)];
     setRecoveredDocument(newArr);
@@ -209,7 +208,7 @@ const Day1 = () => {
           </div>
           <div className="container-rows">
             <button
-              onClick={() => recoverCalibarationValues()}
+              onClick={() => recoverCalibrationValues()}
               disabled={recovered}
             >
               Recover calibration values
@@ -218,7 +217,7 @@ const Day1 = () => {
               Calculate sum of all of the calibration values
             </button>
             <button
-              onClick={() => recoverCalibarationValuesInteractively()}
+              onClick={() => recoverCalibrationValuesInteractively()}
               disabled={recoveredI}
             >
               Recover calibration values interactively
