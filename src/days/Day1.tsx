@@ -86,8 +86,10 @@ export const calibrationValuePart2 = (lineOfText: string): number => {
 
   const firstTextNumber = firstSpelledOutNumber(lineOfText);
   const lastTextNumber = lastSpelledOutNumber(lineOfText);
+  // console.log("firstNumberIndex", firstNumberIndex);
   const firstNumber =
-    firstNumberIndex !== -1 && firstNumberIndex < firstTextNumber.index
+    (firstNumberIndex !== -1 && firstNumberIndex < firstTextNumber.index) ||
+    firstTextNumber.index === -1
       ? lineOfText[firstNumberIndex]
       : firstTextNumber.value;
   const lastNumber =

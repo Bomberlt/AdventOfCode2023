@@ -48,6 +48,10 @@ treb7uchet`;
       const lineOfText = "abcone2threexyz";
       expect(calibrationValuePart2(lineOfText)).toBe(13);
     });
+    it("gets calibration value from line of text 92", () => {
+      const lineOfText = "92";
+      expect(calibrationValuePart2(lineOfText)).toBe(92);
+    });
   });
   describe("firstSpelledOutNumber", () => {
     it("gets index of number", () => {
