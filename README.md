@@ -9,3 +9,7 @@ This is app for solving Advent of code 2023 challenges - https://adventofcode.co
 ## Starting project
 
 `npm run dev`
+
+## Unit tests
+
+`npm run test`

@@ -1,17 +1,21 @@
-import { useState } from "react";
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import "./App.css";
 
-function App() {
-  const [count, setCount] = useState(0);
+import Day1 from "./days/Day1.tsx";
 
+function App() {
   return (
     <>
-      <h1>Advent of Code 2023</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-      </div>
+      <BrowserRouter>
+        <h1>Advent of Code 2023</h1>
+        <div>
+          <h2>Days:</h2>
+          <Link to="/day1">Day1</Link>
+        </div>
+        <Routes>
+          <Route path="/day1" element={<Day1 />} />
+        </Routes>
+      </BrowserRouter>
     </>
   );
 }
