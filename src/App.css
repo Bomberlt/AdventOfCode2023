@@ -56,6 +56,13 @@
 .container-rows {
   display: flex; /* or inline-flex */
   flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  align-content: flex-start;
+}
+.container-rows div,
+.container-rows button {
+  margin: 2%;
 }
 
 .document {

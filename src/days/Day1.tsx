@@ -123,6 +123,7 @@ const Day1 = () => {
   const [part, setPart] = useState(1);
   const [document, setDocument] = useState(day1Input);
   const [recovered, setRecovered] = useState(false);
+  const [answer, setAnswer] = useState();
   const recoverCalibarationValues = () => {
     if (!recovered) {
       console.log("recovering...");
@@ -132,6 +133,18 @@ const Day1 = () => {
       );
       setRecovered(true);
     }
+  };
+
+  const getAnswer = () => {
+    setAnswer(
+      document
+        .split("\n")
+        .reduce(
+          (previousValue: number, currentValue: string) =>
+            previousValue + parseInt(currentValue),
+          0
+        )
+    );
   };
 
   return (
@@ -172,17 +185,18 @@ const Day1 = () => {
           </div>
         </div>
         <div className="container-rows">
-          <div>
-            <button
-              onClick={() => recoverCalibarationValues()}
-              disabled={recovered}
-            >
-              Recover calibration values
-            </button>
-          </div>
+          <button
+            onClick={() => recoverCalibarationValues()}
+            disabled={recovered}
+          >
+            Recover calibration values
+          </button>
+          <button onClick={() => getAnswer()} disabled={answer !== undefined}>
+            Calculate sum of all of the calibration values
+          </button>
           <>
             {part === 1 ? (
-              <div>Answer = {part1answer(day1Input)}</div>
+              <div>Answer = {answer}</div>
             ) : (
               <div>Part 2 answer = {part2answer(day1Input)}</div>
             )}
