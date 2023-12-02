@@ -62,6 +62,28 @@ export const readGameLine = (gameLine: string): Game => {
   return { id: id, subsets: subsets };
 };
 
+export const gamePower = (game: Game): number => {
+  const biggestRed = game.subsets
+    .map(normalizeSubset)
+    .reduce(
+      (biggest, subset) => (subset.red > biggest ? subset.red : biggest),
+      0
+    );
+  const biggestGreen = game.subsets
+    .map(normalizeSubset)
+    .reduce(
+      (biggest, subset) => (subset.green > biggest ? subset.green : biggest),
+      0
+    );
+  const biggestBlue = game.subsets
+    .map(normalizeSubset)
+    .reduce(
+      (biggest, subset) => (subset.blue > biggest ? subset.blue : biggest),
+      0
+    );
+  return biggestRed * biggestGreen * biggestBlue;
+};
+
 export const part1answer = (input: string): number => {
   const lines = input.split("\n");
   return lines
@@ -70,6 +92,13 @@ export const part1answer = (input: string): number => {
       (acc: number, game) => acc + (isGamePossible(game) ? game.id : 0),
       0
     );
+};
+
+export const part2answer = (input: string): number => {
+  const lines = input.split("\n");
+  return lines
+    .map(readGameLine)
+    .reduce<number>((acc: number, game) => acc + gamePower(game), 0);
 };
 
 const Day1 = () => {
