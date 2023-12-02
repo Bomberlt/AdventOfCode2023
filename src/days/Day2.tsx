@@ -44,7 +44,7 @@ export const isGamePossible = (game: Game): boolean => {
 };
 
 export const readGameLine = (gameLine: string): Game => {
-  const id = parseInt(gameLine.split(" ")[1].split(":")[0]);
+  const id = parseInt(gameLine.split(" ")[1][0]);
   const subsetsLines = gameLine.split(": ")[1].split("; ");
 
   const subsets: Subset[] = subsetsLines.map((subsetLine) => {
@@ -113,7 +113,14 @@ const Day1 = () => {
 
   return (
     <div>
-      <Day dayNumber={2} part={part} setPart={setPart}>
+      <Day
+        dayNumber={2}
+        part={part}
+        setPart={(partNo) => {
+          setPart(partNo);
+          setAnswer(undefined);
+        }}
+      >
         <div className="container">
           <div className="container-rows">
             <div>The record of a few games: </div>
