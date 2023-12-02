@@ -62,12 +62,14 @@ export const readGameLine = (gameLine: string): Game => {
   return { id: id, subsets: subsets };
 };
 
-export const part1answer = (input: string) => {
+export const part1answer = (input: string): number => {
   const lines = input.split("\n");
-  lines.map(readGameLine).reduce<number>((acc: number, game) => {
-    acc + (isGamePossible(game) ? game.id : 0);
-  }, 0);
-  return 8;
+  return lines
+    .map(readGameLine)
+    .reduce<number>(
+      (acc: number, game) => acc + (isGamePossible(game) ? game.id : 0),
+      0
+    );
 };
 
 const Day1 = () => {
