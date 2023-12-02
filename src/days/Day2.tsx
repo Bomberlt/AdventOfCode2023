@@ -43,12 +43,39 @@ export const isGamePossible = (game: Game): boolean => {
     );
 };
 
+export const readGameLine = (gameLine: string): Game => {
+  const id = parseInt(gameLine.split(" ")[1].split(":")[0]);
+  const subsetsLines = gameLine.split(": ")[1].split("; ");
+
+  const subsets: Subset[] = subsetsLines.map((subsetLine) => {
+    const colors = subsetLine.split(", ");
+    const red = colors.find((color) => color.includes("red"));
+    const green = colors.find((color) => color.includes("green"));
+    const blue = colors.find((color) => color.includes("blue"));
+    return {
+      red: red ? parseInt(red.split(" ")[0]) : undefined,
+      green: green ? parseInt(green.split(" ")[0]) : undefined,
+      blue: blue ? parseInt(blue.split(" ")[0]) : undefined,
+    };
+  });
+
+  return { id: id, subsets: subsets };
+};
+
+export const part1answer = (input: string) => {
+  const lines = input.split("\n");
+  lines.map(readGameLine).reduce<number>((acc: number, game) => {
+    acc + (isGamePossible(game) ? game.id : 0);
+  }, 0);
+  return 8;
+};
+
 const Day1 = () => {
   const [part, setPart] = useState(1);
   const [answer, setAnswer] = useState<number | undefined>();
   const [answer2, setAnswer2] = useState<number | undefined>();
   const getAnswer = () => {
-    part === 1 ? setAnswer(0) : setAnswer2(0);
+    part === 1 ? setAnswer(part1answer(day2Input)) : setAnswer2(0);
   };
 
   return (
@@ -56,7 +83,12 @@ const Day1 = () => {
       <Day dayNumber={1} part={part} setPart={setPart}>
         <div className="container">
           <div className="container-rows">
-            <div>Input: </div>
+            <div>The record of a few games: </div>
+            <div className="document">
+              {day2Input.split("\n").map((line, i) => (
+                <span key={i}>{line}</span>
+              ))}
+            </div>
           </div>
           <div className="container-rows">
             <button onClick={() => getAnswer()} disabled={answer !== undefined}>
