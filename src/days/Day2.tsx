@@ -106,12 +106,14 @@ const Day1 = () => {
   const [answer, setAnswer] = useState<number | undefined>();
   const [answer2, setAnswer2] = useState<number | undefined>();
   const getAnswer = () => {
-    part === 1 ? setAnswer(part1answer(day2Input)) : setAnswer2(0);
+    part === 1
+      ? setAnswer(part1answer(day2Input))
+      : setAnswer2(part2answer(day2Input));
   };
 
   return (
     <div>
-      <Day dayNumber={1} part={part} setPart={setPart}>
+      <Day dayNumber={2} part={part} setPart={setPart}>
         <div className="container">
           <div className="container-rows">
             <div>The record of a few games: </div>
