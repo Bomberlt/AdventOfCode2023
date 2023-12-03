@@ -99,7 +99,6 @@ export const part1answer = (input: string): number => {
     return { ...tile, partNo: isPartNo(tile, schematic) };
   });
   const partNos: number[] = getPartNos(schematicMarkedParts, input);
-  return 4361;
   return partNos.reduce((acc, partNo) => acc + partNo, 0);
 };
 
