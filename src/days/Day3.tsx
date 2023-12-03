@@ -2,8 +2,40 @@ import { useState } from "react";
 import { input as day2Input } from "../inputs/day2input.ts";
 import Day from "./Day.tsx";
 
+interface Tile {
+  char: string;
+  x: number;
+  y: number;
+  partNo?: boolean;
+  symbol: boolean;
+}
+
+export const readSchematic = (input: string): Tile[] => {
+  const lines = input.split("\n");
+  return lines
+    .map((line, y) =>
+      line.split("").map((char, x) => {
+        return { char: char, x: x, y: y, symbol: char !== "." };
+      })
+    )
+    .reduce((acc, line) => acc.concat(line), []);
+};
+
+export const isPartNo = (tile: Tile, schematic: Tile[]): boolean => {
+  return false;
+};
+
+export const getPartNos = (schematic: Tile[]): number[] => {
+  return [];
+};
+
 export const part1answer = (input: string): number => {
-  return 4361;
+  const schematic = readSchematic(input);
+  const schematicMarkedParts = schematic.map((tile) => {
+    return { ...tile, partNo: isPartNo(tile, schematic) };
+  });
+  const partNos: number[] = getPartNos(schematicMarkedParts);
+  return partNos.reduce((acc, partNo) => acc + partNo, 0);
 };
 
 export const part2answer = (input: string): number => {
