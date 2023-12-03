@@ -47,6 +47,12 @@ const tilesTouching = (
     tile1.y > 0 && tile2.y === tile1.y - 1 && tile2.x === tile1.x;
   const tile2OnBottom =
     tile1.y < height && tile2.y === tile1.y + 1 && tile2.x === tile1.x;
+  // console.log("height", height);
+  if (tile1.x === 12 && tile1.y === height && tile2.y === height - 1) {
+    console.log("tile2", tile2);
+    console.log("tile1", tile1);
+    console.log(tile2OnLeft, tile2OnRight, tile2OnTop, tile2OnBottom);
+  }
   return tile2OnLeft || tile2OnRight || tile2OnTop || tile2OnBottom;
 };
 
@@ -63,7 +69,7 @@ export const isPartNo = (tile: Tile, schematic: Tile[]): boolean => {
   return schematic.some((schematicTile) => {
     if (!schematicTile.symbol) return false;
     return (
-      schematicTile.symbol && tilesTouching(schematicTile, tile, width, height)
+      schematicTile.symbol && tilesTouching(tile, schematicTile, width, height)
     );
   });
 };
@@ -71,33 +77,30 @@ export const isPartNo = (tile: Tile, schematic: Tile[]): boolean => {
 export const getPartNos = (schematic: Tile[], input: string): number[] => {
   const lines = input.split("\n");
   const partNos: Tile[] = schematic.filter((tile) => isPartNo(tile, schematic));
-  console.log(
-    "partNos",
-    partNos.filter((tile) => tile.y < 3)
-  );
-  return partNos
-    .map((partNo) => {
-      const numbersToLeft = lines[partNo.y]
-        .substring(0, partNo.x)
-        .split("")
-        .reverse()
-        .join("")
-        .replace(/\D/g, ".")
-        .split(".")[0]
-        .split("")
-        .reverse()
-        .join("");
-      const numbersToRight = lines[partNo.y]
-        .substring(partNo.x + 1, lines[partNo.y].length)
-        .replace(/\D/g, ".")
-        .split(".")[0];
-      if (partNo.y < 3) {
-        console.log("numbersToLeft", numbersToLeft);
-        console.log("numbersToRight", numbersToRight);
-      }
-      return parseInt(numbersToLeft + partNo.char + numbersToRight);
-    })
-    .filter((value, index, array) => array.indexOf(value) === index);
+  //console.log("partNos1",partNos.filter((tile) => tile.y < 3));
+  return partNos.map((partNo) => {
+    const numbersToLeft = lines[partNo.y]
+      .substring(0, partNo.x)
+      .split("")
+      .reverse()
+      .join("")
+      .replace(/\D/g, ".")
+      .split(".")[0]
+      .split("")
+      .reverse()
+      .join("");
+    const numbersToRight = lines[partNo.y]
+      .substring(partNo.x + 1, lines[partNo.y].length)
+      .replace(/\D/g, ".")
+      .split(".")[0];
+    if (partNo.y > 138) {
+      console.log("numbersToLeft", numbersToLeft);
+      console.log("numbersToRight", numbersToRight);
+    }
+    //console.log("a", parseInt(numbersToLeft + partNo.char + numbersToRight));
+    return parseInt(numbersToLeft + partNo.char + numbersToRight);
+  });
+  // TODO: Remove nearby partNos
 };
 
 export const part1answer = (input: string): number => {
@@ -106,6 +109,7 @@ export const part1answer = (input: string): number => {
     return { ...tile, partNo: isPartNo(tile, schematic) };
   });
   const partNos: number[] = getPartNos(schematicMarkedParts, input);
+  console.log("partNos", partNos);
   return partNos.reduce((acc, partNo) => acc + partNo, 0);
 };
 
