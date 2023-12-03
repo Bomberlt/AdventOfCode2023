@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { input as day2Input } from "../inputs/day2input.ts";
+import { input as day3Input } from "../inputs/day3input.ts";
 import Day from "./Day.tsx";
 
 interface Tile {
@@ -51,7 +51,7 @@ const tilesTouching = (
 };
 
 export const isPartNo = (tile: Tile, schematic: Tile[]): boolean => {
-  if (tile.char === ".") return false;
+  if (isNaN(parseInt(tile.char))) return false;
   const width = schematic.reduce(
     (acc, schematicTile) => Math.max(acc, schematicTile.x),
     0
@@ -71,7 +71,10 @@ export const isPartNo = (tile: Tile, schematic: Tile[]): boolean => {
 export const getPartNos = (schematic: Tile[], input: string): number[] => {
   const lines = input.split("\n");
   const partNos: Tile[] = schematic.filter((tile) => isPartNo(tile, schematic));
-  console.log("partNos", partNos);
+  console.log(
+    "partNos",
+    partNos.filter((tile) => tile.y < 3)
+  );
   return partNos
     .map((partNo) => {
       const numbersToLeft = lines[partNo.y]
@@ -79,15 +82,19 @@ export const getPartNos = (schematic: Tile[], input: string): number[] => {
         .split("")
         .reverse()
         .join("")
+        .replace(/\D/g, ".")
         .split(".")[0]
         .split("")
         .reverse()
         .join("");
       const numbersToRight = lines[partNo.y]
         .substring(partNo.x + 1, lines[partNo.y].length)
+        .replace(/\D/g, ".")
         .split(".")[0];
-      console.log("numbersToLeft", numbersToLeft);
-      console.log("numbersToRight", numbersToRight);
+      if (partNo.y < 3) {
+        console.log("numbersToLeft", numbersToLeft);
+        console.log("numbersToRight", numbersToRight);
+      }
       return parseInt(numbersToLeft + partNo.char + numbersToRight);
     })
     .filter((value, index, array) => array.indexOf(value) === index);
@@ -112,8 +119,8 @@ const Day1 = () => {
   const [answer2, setAnswer2] = useState<number | undefined>();
   const getAnswer = () => {
     part === 1
-      ? setAnswer(part1answer(day2Input))
-      : setAnswer2(part2answer(day2Input));
+      ? setAnswer(part1answer(day3Input))
+      : setAnswer2(part2answer(day3Input));
   };
 
   return (
@@ -128,8 +135,12 @@ const Day1 = () => {
       >
         <div className="container">
           <div className="container-rows">
-            <div>input: </div>
-            <div className="document"></div>
+            <div>Engine schematic: </div>
+            <div className="document">
+              {day3Input.split("\n").map((line, i) => (
+                <span key={i}>{line}</span>
+              ))}
+            </div>
           </div>
           <div className="container-rows">
             <button onClick={() => getAnswer()} disabled={answer !== undefined}>
