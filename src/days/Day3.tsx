@@ -117,7 +117,7 @@ export const part2answer = (input: string): number => {
   return 0;
 };
 
-const Day1 = () => {
+const Day3 = () => {
   const [part, setPart] = useState(1);
   const [answer, setAnswer] = useState<number | undefined>();
   const [answer2, setAnswer2] = useState<number | undefined>();
@@ -164,4 +164,4 @@ const Day1 = () => {
   );
 };
 
-export default Day1;
+export default Day3;
