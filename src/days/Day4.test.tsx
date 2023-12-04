@@ -24,5 +24,10 @@ Card 6: 31 18 13 56 72 | 74 77 10 23 35 67 36 11`;
 
       expect(cardWinCount(secondCard)).toBe(2);
     });
+    it("returns 2 for third card", () => {
+      const thirdCard = `Card 3:  1 21 53 59 44 | 69 82 63 72 16 21 14  1`;
+
+      expect(cardWinCount(thirdCard)).toBe(2);
+    });
   });
 });

@@ -4,22 +4,27 @@ import Day from "./Day.tsx";
 
 export const cardWinCount = (card: string): number => {
   const cardNumbers = card.split(": ")[1].split(" | ");
-  console.log("cardNumbers", cardNumbers[0].split(" "));
   const winningNumbers = cardNumbers[0]
+    .trim()
     .split(" ")
     .map((number) => parseInt(number));
   const numbersYouHave = cardNumbers[1]
+    .trim()
     .split(" ")
     .map((number) => parseInt(number));
-  console.log("winningNumbers", winningNumbers);
-  console.log("numbersYouHave", numbersYouHave);
   return winningNumbers.filter((winningNumber: number) =>
     numbersYouHave.includes(winningNumber)
   ).length;
 };
 
 export const part1answer = (input: string): number => {
-  return 13;
+  console.log("lines", input.split("\n"));
+  console.log("win counts", input.split("\n").map(cardWinCount));
+  return input
+    .split("\n")
+    .map(cardWinCount)
+    .map((winCount) => (winCount === 0 ? 0 : Math.pow(2, winCount - 1)))
+    .reduce((acc, count) => acc + count, 0);
 };
 
 export const part2answer = (input: string): number => {
