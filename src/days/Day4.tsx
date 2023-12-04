@@ -37,8 +37,31 @@ export const part1answer = (input: string): number => {
     .reduce((acc, count) => acc + count, 0);
 };
 
+interface CardCopies {
+  card: string;
+  copies: number;
+}
+
 export const part2answer = (input: string): number => {
-  return 0;
+  const cards: CardCopies[] = input
+    .split("\n")
+    .map((line) => ({ card: line, copies: 1 }));
+  cards.forEach((card, i) => {
+    let winCount = cardWinCount(card.card);
+    let j = i + 1;
+    while (winCount > 0) {
+      cards[j].copies += card.copies;
+      j++;
+      winCount--;
+    }
+  });
+  console.log(
+    "copies",
+    cards.map((card) => card.copies)
+  );
+  return cards
+    .map((card) => card.copies)
+    .reduce((acc, count) => acc + count, 0);
 };
 
 const Day4 = () => {
