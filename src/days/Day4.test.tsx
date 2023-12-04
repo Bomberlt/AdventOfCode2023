@@ -29,5 +29,10 @@ Card 6: 31 18 13 56 72 | 74 77 10 23 35 67 36 11`;
 
       expect(cardWinCount(thirdCard)).toBe(2);
     });
+    it("returns 9 for card 11", () => {
+      const card11 = `Card  11: 11  1 45 82 22 87 28 35 42 85 | 65 98 77 11 82 28  6  8 42 45 49 17 87  9 85  1 59  4 93 37 89 57 16 22 68`;
+
+      expect(cardWinCount(card11)).toBe(9);
+    });
   });
 });

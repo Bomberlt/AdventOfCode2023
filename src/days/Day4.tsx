@@ -7,19 +7,29 @@ export const cardWinCount = (card: string): number => {
   const winningNumbers = cardNumbers[0]
     .trim()
     .split(" ")
-    .map((number) => parseInt(number));
+    .filter((number) => number !== " " && number !== "")
+    .map((number) => parseInt(number.trim()));
   const numbersYouHave = cardNumbers[1]
     .trim()
     .split(" ")
-    .map((number) => parseInt(number));
+    .filter((number) => number !== " " && number !== "")
+    .map((number) => parseInt(number.trim()));
+  // console.log("winningNumbers", winningNumbers);
+  // console.log("numbersYouHave", numbersYouHave);
+  // console.log(
+  //   "wins",
+  //   winningNumbers.filter((winningNumber: number) =>
+  //     numbersYouHave.includes(winningNumber)
+  //   )
+  // );
   return winningNumbers.filter((winningNumber: number) =>
     numbersYouHave.includes(winningNumber)
   ).length;
 };
 
 export const part1answer = (input: string): number => {
-  console.log("lines", input.split("\n"));
-  console.log("win counts", input.split("\n").map(cardWinCount));
+  // console.log("lines", input.split("\n"));
+  // console.log("win counts", input.split("\n").map(cardWinCount));
   return input
     .split("\n")
     .map(cardWinCount)
