@@ -2,6 +2,22 @@ import { useState } from "react";
 import { input as day4Input } from "../inputs/day4input.ts";
 import Day from "./Day.tsx";
 
+export const cardWinCount = (card: string): number => {
+  const cardNumbers = card.split(": ")[1].split(" | ");
+  console.log("cardNumbers", cardNumbers[0].split(" "));
+  const winningNumbers = cardNumbers[0]
+    .split(" ")
+    .map((number) => parseInt(number));
+  const numbersYouHave = cardNumbers[1]
+    .split(" ")
+    .map((number) => parseInt(number));
+  console.log("winningNumbers", winningNumbers);
+  console.log("numbersYouHave", numbersYouHave);
+  return winningNumbers.filter((winningNumber: number) =>
+    numbersYouHave.includes(winningNumber)
+  ).length;
+};
+
 export const part1answer = (input: string): number => {
   return 13;
 };

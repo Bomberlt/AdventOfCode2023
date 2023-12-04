@@ -1,4 +1,4 @@
-import { part1answer, part2answer } from "./Day4";
+import { cardWinCount, part1answer, part2answer } from "./Day4";
 
 describe("Day4", () => {
   describe("part1answer", () => {
@@ -11,6 +11,18 @@ Card 5: 87 83 26 28 32 | 88 30 70 12 93 22 82 36
 Card 6: 31 18 13 56 72 | 74 77 10 23 35 67 36 11`;
 
       expect(part1answer(sampleInput)).toBe(13);
+    });
+  });
+  describe("cardWinCount", () => {
+    it("returns 3 for first card", () => {
+      const firstCard = `Card 1: 41 48 83 86 17 | 83 86  6 31 17  9 48 53`;
+
+      expect(cardWinCount(firstCard)).toBe(4);
+    });
+    it("returns 2 for second card", () => {
+      const secondCard = `Card 2: 13 32 20 16 61 | 61 30 68 82 17 32 24 19`;
+
+      expect(cardWinCount(secondCard)).toBe(2);
     });
   });
 });
