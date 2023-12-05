@@ -104,22 +104,22 @@ describe("Day5", () => {
 
   describe("applyMap", () => {
     it("Seed number 79 corresponds to soil number 81", () => {
-      expect(applyMap(79, maps[0])).toBe(81);
+      expect(applyMap(79, maps[0], 100)).toBe(81);
     });
     it("Seed number 14 corresponds to soil number 14", () => {
-      expect(applyMap(14, maps[0])).toBe(14);
+      expect(applyMap(14, maps[0], 100)).toBe(14);
     });
     it("Seed number 55 corresponds to soil number 57", () => {
-      expect(applyMap(55, maps[0])).toBe(57);
+      expect(applyMap(55, maps[0], 100)).toBe(57);
     });
     it("Seed number 13 corresponds to soil number 13", () => {
-      expect(applyMap(13, maps[0])).toBe(13);
+      expect(applyMap(13, maps[0], 100)).toBe(13);
     });
   });
 
   describe("applyMap", () => {
     it("Seed number 79 corresponds to location  82", () => {
-      expect(applyMaps(79, maps)).toBe(82);
+      expect(applyMaps(79, maps, 100)).toBe(82);
     });
   });
 });

@@ -31,7 +31,7 @@ export const readMaps = (input: string): Mapp[] => {
     }, [] as Mapp[]);
 };
 
-export const applyMap = (xNumber: number, map: Mapp): number => {
+export const applyMap = (xNumber: number, map: Mapp, size: number): number => {
   const range = map.ranges.find(
     (range) =>
       xNumber >= range.sourceStart && xNumber < range.sourceStart + range.length
@@ -42,14 +42,18 @@ export const applyMap = (xNumber: number, map: Mapp): number => {
     const diff =
       range.destinationStart >= range.sourceStart
         ? range.destinationStart - range.sourceStart
-        : range.destinationStart - range.sourceStart + 100;
-    return (xNumber + diff) % 100;
+        : range.destinationStart - range.sourceStart + size;
+    return (xNumber + diff) % size;
   }
 };
 
-export const applyMaps = (xNumber: number, maps: Mapp[]): number => {
+export const applyMaps = (
+  xNumber: number,
+  maps: Mapp[],
+  size: number
+): number => {
   return maps.reduce((acc, map) => {
-    return applyMap(acc, map);
+    return applyMap(acc, map, size);
   }, xNumber);
 };
 
@@ -60,7 +64,12 @@ export const part1answer = (input: string): number => {
     .split(": ")[1]
     .split(" ")
     .map((number) => parseInt(number));
-  const locations = seeds.map((number) => applyMaps(number, maps));
+  const digitsCount = Math.max(...seeds)
+    .toString()
+    .split("").length;
+  const size = Math.pow(10, digitsCount);
+  console.log(size);
+  const locations = seeds.map((number) => applyMaps(number, maps, size));
   return Math.min(...locations);
 };
 
@@ -93,7 +102,9 @@ const Day5 = () => {
             <div>The latest Island Island Almanac: </div>
             <div className="document" style={{ display: "block" }}>
               {day5Input.split("\n").map((line, i) => (
-                <div key={i}>{line}</div>
+                <div key={i} style={{ textWrap: "wrap" }}>
+                  {line}
+                </div>
               ))}
             </div>
           </div>
