@@ -6,6 +6,7 @@ import Day1 from "./days/Day1.tsx";
 import Day2 from "./days/Day2.tsx";
 import Day3 from "./days/Day3.tsx";
 import Day4 from "./days/Day4.tsx";
+import Day5 from "./days/Day5.tsx";
 
 function App() {
   return (
@@ -15,7 +16,7 @@ function App() {
         <h2>Days:</h2>
         <Link to="/day12022">Day1 (2022)</Link> | <Link to="/day1">Day1</Link> |{" "}
         <Link to="/day2">Day2</Link> | <Link to="/day3">Day3</Link> |{" "}
-        <Link to="/day4">Day4</Link>
+        <Link to="/day4">Day4</Link> | <Link to="/day5">Day5</Link>
       </div>
       <Routes>
         <Route path="/day12022" element={<Day12022 />} />
@@ -23,6 +24,7 @@ function App() {
         <Route path="/day2" element={<Day2 />} />
         <Route path="/day3" element={<Day3 />} />
         <Route path="/day4" element={<Day4 />} />
+        <Route path="/day5" element={<Day5 />} />
       </Routes>
     </BrowserRouter>
   );
