@@ -47,8 +47,21 @@ export const applyMap = (xNumber: number, map: Mapp): number => {
   }
 };
 
+export const applyMaps = (xNumber: number, maps: Mapp[]): number => {
+  return maps.reduce((acc, map) => {
+    return applyMap(acc, map);
+  }, xNumber);
+};
+
 export const part1answer = (input: string): number => {
-  return 35;
+  const maps = readMaps(input);
+  const seeds = input
+    .split("\n")[0]
+    .split(": ")[1]
+    .split(" ")
+    .map((number) => parseInt(number));
+  const locations = seeds.map((number) => applyMaps(number, maps));
+  return Math.min(...locations);
 };
 
 export const part2answer = (input: string): number => {
