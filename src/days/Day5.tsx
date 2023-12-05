@@ -2,6 +2,35 @@ import { useState } from "react";
 import { input as day5Input } from "../inputs/day5input.ts";
 import Day from "./Day.tsx";
 
+export interface Mapp {
+  ranges: {
+    destinationStart: number;
+    sourceStart: number;
+    length: number;
+  }[];
+}
+
+export const readMaps = (input: string): Mapp[] => {
+  const lines = input.split("\n");
+  lines.shift();
+  return lines
+    .filter((line) => line.length > 0)
+    .reduce<Mapp[]>((acc, line) => {
+      if (line.includes("map:")) {
+        acc.push({ ranges: [] } as Mapp);
+      } else {
+        const numbers = line.split(" ").map((number) => parseInt(number));
+        const ranges = {
+          destinationStart: numbers[0],
+          sourceStart: numbers[1],
+          length: numbers[2],
+        };
+        acc[acc.length - 1].ranges.push(ranges);
+      }
+      return acc;
+    }, [] as Mapp[]);
+};
+
 export const part1answer = (input: string): number => {
   return 35;
 };
