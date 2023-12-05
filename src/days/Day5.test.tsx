@@ -1,4 +1,4 @@
-import { part1answer, part2answer, readMaps } from "./Day5";
+import { applyMap, part1answer, part2answer, readMaps } from "./Day5";
 
 const sampleInput = `seeds: 79 14 55 13
 
@@ -93,6 +93,21 @@ describe("Day5", () => {
   describe("readMaps", () => {
     it("returns a Maps array for sample data", () => {
       expect(readMaps(sampleInput)).toEqual(maps);
+    });
+  });
+
+  describe("applyMap", () => {
+    it("Seed number 79 corresponds to soil number 81", () => {
+      expect(applyMap(79, maps[0])).toBe(81);
+    });
+    it("Seed number 14 corresponds to soil number 14", () => {
+      expect(applyMap(14, maps[0])).toBe(14);
+    });
+    it("Seed number 55 corresponds to soil number 57", () => {
+      expect(applyMap(55, maps[0])).toBe(57);
+    });
+    it("Seed number 13 corresponds to soil number 13", () => {
+      expect(applyMap(13, maps[0])).toBe(13);
     });
   });
 });

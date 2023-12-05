@@ -31,6 +31,22 @@ export const readMaps = (input: string): Mapp[] => {
     }, [] as Mapp[]);
 };
 
+export const applyMap = (xNumber: number, map: Mapp): number => {
+  const range = map.ranges.find(
+    (range) =>
+      xNumber >= range.sourceStart && xNumber < range.sourceStart + range.length
+  );
+  if (!range) {
+    return xNumber;
+  } else {
+    const diff =
+      range.destinationStart >= range.sourceStart
+        ? range.destinationStart - range.sourceStart
+        : range.destinationStart - range.sourceStart + 100;
+    return (xNumber + diff) % 100;
+  }
+};
+
 export const part1answer = (input: string): number => {
   return 35;
 };
