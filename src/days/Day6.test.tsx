@@ -1,4 +1,10 @@
-import { calculateDistance, part1answer, part2answer, readTimes } from "./Day6";
+import {
+  calculateDistance,
+  part1answer,
+  part2answer,
+  readTimes,
+  readTimesPart2,
+} from "./Day6";
 
 const sampleInput = `Time:      7  15   30
 Distance:  9  40  200`;
@@ -7,6 +13,7 @@ const sampleTimes = [
   [15, 40],
   [30, 200],
 ];
+const sampleTimes2 = [[71530, 940200]];
 
 describe("Day6", () => {
   describe("calculateDistance", () => {
@@ -21,6 +28,12 @@ describe("Day6", () => {
   describe("read times", () => {
     it("reads sample times", () => {
       expect(readTimes(sampleInput)).toEqual(sampleTimes);
+    });
+  });
+
+  describe("read times part2", () => {
+    it("reads sample  times", () => {
+      expect(readTimesPart2(sampleInput)).toEqual(sampleTimes2);
     });
   });
   describe("part1answer", () => {

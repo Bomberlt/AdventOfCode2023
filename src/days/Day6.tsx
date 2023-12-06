@@ -27,6 +27,15 @@ export const readTimes = (input: string): number[][] => {
     linesWithNumbers[1][i],
   ]);
 };
+export const readTimesPart2 = (input: string): number[][] => {
+  const lines = input.split("\n");
+
+  const numbers = lines.map((line) => {
+    const number = line.split(":")[1].replaceAll(" ", "");
+    return parseInt(number);
+  });
+  return [numbers];
+};
 
 export const part1answer = (input: string): number => {
   const times = readTimes(input);
