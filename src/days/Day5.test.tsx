@@ -95,6 +95,11 @@ describe("Day5", () => {
       expect(part1answer(sampleInput)).toBe(35);
     });
   });
+  describe("part2answer", () => {
+    it("returns 46 for sample data", () => {
+      expect(part2answer(sampleInput)).toBe(46);
+    });
+  });
 
   describe("readMaps", () => {
     it("returns a Maps array for sample data", () => {

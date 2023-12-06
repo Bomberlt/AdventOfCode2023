@@ -10,6 +10,11 @@ export interface Mapp {
   }[];
 }
 
+export interface Seed {
+  rangeStart: number;
+  length: number;
+}
+
 export const readMaps = (input: string): Mapp[] => {
   const lines = input.split("\n");
   lines.shift();
@@ -74,7 +79,37 @@ export const part1answer = (input: string): number => {
 };
 
 export const part2answer = (input: string): number => {
-  return 0;
+  const maps = readMaps(input);
+  const seeds = input
+    .split("\n")[0]
+    .split(": ")[1]
+    .split(" ")
+    .map((number) => parseInt(number))
+    .reduce<Seed[]>((acc, length, i, arr) => {
+      if (i % 2 === 1) {
+        acc.push({ rangeStart: arr[i - 1], length: length });
+      }
+      return acc;
+    }, [] as Seed[]);
+  console.log("seeds", seeds);
+  const digitsCount = Math.max(
+    ...seeds.map((seed) => seed.rangeStart + seed.length)
+  )
+    .toString()
+    .split("").length;
+  const size = Math.pow(10, digitsCount);
+  console.log(size);
+  const locations = seeds
+    .map((seed) => {
+      const seedValues = [...Array(seed.length).keys()].map(
+        (s) => s + seed.rangeStart
+      );
+      return seedValues.map((number) => applyMaps(number, maps, size));
+    })
+    .reduce((acc, arr) => {
+      return acc.concat(arr);
+    }, [] as number[]);
+  return Math.min(...locations);
 };
 
 const Day5 = () => {
