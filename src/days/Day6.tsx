@@ -11,6 +11,23 @@ export const calculateDistance = (
   return remainingTime * speed;
 };
 
+export const readTimes = (input: string): number[][] => {
+  const lines = input.split("\n");
+
+  const linesWithNumbers = lines.map((line) => {
+    const numbers = line
+      .split(":")[1]
+      .split(" ")
+      .filter((num) => num !== "")
+      .map((num) => parseInt(num.trim()));
+    return numbers;
+  });
+  return linesWithNumbers[0].map((numbers, i) => [
+    linesWithNumbers[0][i],
+    linesWithNumbers[1][i],
+  ]);
+};
+
 export const part1answer = (input: string): number => {
   return 288;
 };
