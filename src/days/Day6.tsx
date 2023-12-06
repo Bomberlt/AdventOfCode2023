@@ -8,6 +8,10 @@ export const calculateDistance = (
 ): number => {
   const remainingTime = raceTime - holdButtonTime;
   const speed = holdButtonTime;
+  // console.log("holdButtonTime", holdButtonTime);
+  // console.log("remainingTime", remainingTime);
+  // console.log("speed", speed);
+
   return remainingTime * speed;
 };
 
@@ -45,6 +49,8 @@ export const part1answer = (input: string): number => {
     posibleHoldButtonTimes.shift();
     posibleHoldButtonTimes.pop();
     let numberOfWaysToBeatRecord = 0;
+    // console.log("raceTime", raceTime);
+    // console.log("possibleHoldButtonTimes", posibleHoldButtonTimes);
     posibleHoldButtonTimes.forEach((holdButtonTime) => {
       if (calculateDistance(holdButtonTime, raceTime) > record) {
         numberOfWaysToBeatRecord++;
@@ -99,11 +105,19 @@ const Day6 = () => {
               Sheet of paper that lists the time allowed for each race and also
               the best distance ever recorded in that race:{" "}
             </div>
-            <div className="document" style={{ display: "block" }}>
-              {dayInput.split("\n").map((line, i) => (
-                <div key={i}>{line}</div>
-              ))}
-            </div>
+            {part === 1 ? (
+              <div className="document" style={{ display: "block" }}>
+                {dayInput.split("\n").map((line, i) => (
+                  <div key={i}>{line}</div>
+                ))}
+              </div>
+            ) : (
+              <div className="document" style={{ display: "block" }}>
+                {dayInput.split("\n").map((line, i) => (
+                  <div key={i}>{line.replaceAll(" ", "")}</div>
+                ))}
+              </div>
+            )}
           </div>
           <div className="container-rows">
             <button onClick={() => getAnswer()} disabled={answer !== undefined}>
