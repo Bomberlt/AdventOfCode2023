@@ -2,8 +2,17 @@ import { useState } from "react";
 import { input as dayInput } from "../inputs/day6input.ts";
 import Day from "./Day.tsx";
 
+export const calculateDistance = (
+  holdButtonTime: number,
+  raceTime: number
+): number => {
+  const remainingTime = raceTime - holdButtonTime;
+  const speed = holdButtonTime;
+  return remainingTime * speed;
+};
+
 export const part1answer = (input: string): number => {
-  return 35;
+  return 288;
 };
 
 export const part2answer = (input: string): number => {
@@ -32,7 +41,10 @@ const Day6 = () => {
       >
         <div className="container">
           <div className="container-rows">
-            <div>The latest Island Island Almanac: </div>
+            <div style={{ textWrap: "wrap" }}>
+              Sheet of paper that lists the time allowed for each race and also
+              the best distance ever recorded in that race:{" "}
+            </div>
             <div className="document" style={{ display: "block" }}>
               {dayInput.split("\n").map((line, i) => (
                 <div key={i}>{line}</div>

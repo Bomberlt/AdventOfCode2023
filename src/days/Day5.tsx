@@ -4,8 +4,8 @@ import Day from "./Day.tsx";
 
 export interface Mapp {
   ranges: {
-    destinationStart: number;
     sourceStart: number;
+    destinationStart: number;
     length: number;
   }[];
 }
@@ -125,7 +125,7 @@ const Day5 = () => {
   return (
     <div>
       <Day
-        dayNumber={3}
+        dayNumber={5}
         part={part}
         setPart={(partNo) => {
           setPart(partNo);
