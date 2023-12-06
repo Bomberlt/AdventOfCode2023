@@ -41,4 +41,9 @@ describe("Day6", () => {
       expect(part1answer(sampleInput)).toBe(288);
     });
   });
+  describe("part2answer", () => {
+    it("returns 71503 for sample data", () => {
+      expect(part2answer(sampleInput)).toBe(71503);
+    });
+  });
 });

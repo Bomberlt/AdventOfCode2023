@@ -59,7 +59,18 @@ export const part1answer = (input: string): number => {
 };
 
 export const part2answer = (input: string): number => {
-  return 0;
+  const time = readTimesPart2(input)[0];
+  const [raceTime, record] = time;
+  const posibleHoldButtonTimes = [...Array(raceTime).keys()];
+  posibleHoldButtonTimes.shift();
+  posibleHoldButtonTimes.pop();
+  let numberOfWaysToBeatRecord = 0;
+  posibleHoldButtonTimes.forEach((holdButtonTime) => {
+    if (calculateDistance(holdButtonTime, raceTime) > record) {
+      numberOfWaysToBeatRecord++;
+    }
+  });
+  return numberOfWaysToBeatRecord;
 };
 
 const Day6 = () => {
