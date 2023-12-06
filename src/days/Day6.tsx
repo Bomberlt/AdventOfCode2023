@@ -29,7 +29,24 @@ export const readTimes = (input: string): number[][] => {
 };
 
 export const part1answer = (input: string): number => {
-  return 288;
+  const times = readTimes(input);
+  const numberOfWaysToBeatRecordArray = times.map((time) => {
+    const [raceTime, record] = time;
+    const posibleHoldButtonTimes = [...Array(raceTime).keys()];
+    posibleHoldButtonTimes.shift();
+    posibleHoldButtonTimes.pop();
+    let numberOfWaysToBeatRecord = 0;
+    posibleHoldButtonTimes.forEach((holdButtonTime) => {
+      if (calculateDistance(holdButtonTime, raceTime) > record) {
+        numberOfWaysToBeatRecord++;
+      }
+    });
+    return numberOfWaysToBeatRecord;
+  });
+  return numberOfWaysToBeatRecordArray.reduce(
+    (acc, num) => (acc > 0 ? acc * num : acc + num),
+    0
+  );
 };
 
 export const part2answer = (input: string): number => {
