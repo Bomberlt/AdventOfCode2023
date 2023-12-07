@@ -166,6 +166,9 @@ describe('Day7', () => {
 		it('returns four of a kind for KTJJT ', () => {
 			expect(getHandTypeWithJokerRule('KTJJT')).toBe(HandType.fourOfaKind);
 		});
+		it('returns four of a kind for first Joker JTJJK ', () => {
+			expect(getHandTypeWithJokerRule('JTJJK')).toBe(HandType.fourOfaKind);
+		});
 	});
 
 	describe('part2answer', () => {

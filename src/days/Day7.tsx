@@ -155,22 +155,36 @@ export const part1answer = (input: string): number => {
 
 export const getHandTypeWithJokerRule = (hand: string): HandType => {
 	const cards = hand.split('');
-	// First card
-	const seqs: Seq[] = [{ seqCard: cards[0], count: 1 }];
 	let jokerCount = 0;
+	const seqs: Seq[] = [];
+	let lastSeq;
 
-	// Second card
-	let card = cards[1];
+	// First card
+	let card = cards[0];
 	if (card === 'J') {
 		jokerCount++;
 	} else {
-		if (card === seqs[0].seqCard) {
-			seqs[0].count++;
+		lastSeq = seqs.find((seq) => seq.seqCard === card);
+		if (lastSeq) {
+			lastSeq.count++;
 		} else {
 			seqs.push({ seqCard: card, count: 1 });
 		}
 	}
-	let lastSeq;
+
+	// Second card
+	card = cards[1];
+	if (card === 'J') {
+		jokerCount++;
+	} else {
+		lastSeq = seqs.find((seq) => seq.seqCard === card);
+		if (lastSeq) {
+			lastSeq.count++;
+		} else {
+			seqs.push({ seqCard: card, count: 1 });
+		}
+	}
+
 	// Third card
 	card = cards[2];
 	if (card === 'J') {
@@ -212,6 +226,9 @@ export const getHandTypeWithJokerRule = (hand: string): HandType => {
 
 	// console.log('seqs', seqs);
 	// console.log('jokerCount', jokerCount);
+	if (jokerCount === 5) {
+		return HandType.fiveOfaKind;
+	}
 	if (jokerCount > 0) {
 		const biggestSeq = seqs.sort((a, b) => a.count - b.count).at(-1) as Seq;
 		biggestSeq.count = biggestSeq.count + jokerCount;
@@ -255,8 +272,10 @@ export const rankHandsWithJoker = (first: Hand, second: Hand): number => {
 	) {
 		cardToCompare++;
 	}
-	const firstCard = first.hand[cardToCompare];
-	const secondCard = second.hand[cardToCompare];
+	const firstCard =
+		first.hand[cardToCompare] === 'J' ? '0' : first.hand[cardToCompare];
+	const secondCard =
+		second.hand[cardToCompare] === 'J' ? '0' : second.hand[cardToCompare];
 	if (
 		isNaN(parseInt(firstCard)) &&
 		firstCard !== 'J' &&
@@ -278,10 +297,10 @@ export const rankHandsWithJoker = (first: Hand, second: Hand): number => {
 		}
 	}
 
-	// 'J' and letter
-	if (isNaN(parseInt(firstCard)) && isNaN(parseInt(secondCard))) {
-		return firstCard === 'J' ? -1 : 1;
-	}
+	// // 'J' and letter
+	// if (isNaN(parseInt(firstCard)) && isNaN(parseInt(secondCard))) {
+	// 	return firstCard === 'J' ? -1 : 1;
+	// }
 
 	// number and number or letter and number
 	return firstCard > secondCard ? 1 : -1;
