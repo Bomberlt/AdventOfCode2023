@@ -3,6 +3,7 @@ import {
 	getHandType,
 	part1answer,
 	part2answer,
+	rankHands,
 	readHands,
 } from './Day7';
 
@@ -51,6 +52,60 @@ describe('Day7', () => {
 		});
 		it('returns two pair for KK677 ', () => {
 			expect(getHandType('KK677')).toBe(HandType.twoPair);
+		});
+	});
+	describe('rankHands', () => {
+		it('returns 1 for bigger hand type', () => {
+			const hand1 = {
+				hand: '32T3K',
+				bid: 765,
+				type: HandType.fiveOfaKind,
+			};
+			const hand2 = {
+				hand: '32T3K',
+				bid: 765,
+				type: HandType.fourOfaKind,
+			};
+			expect(rankHands(hand1, hand2)).toBe(1);
+		});
+		it('returns -1 for smaller hand type', () => {
+			const hand1 = {
+				hand: '32T3K',
+				bid: 765,
+				type: HandType.highCard,
+			};
+			const hand2 = {
+				hand: '32T3K',
+				bid: 765,
+				type: HandType.onePair,
+			};
+			expect(rankHands(hand1, hand2)).toBe(-1);
+		});
+		it('returns 1 for bigger first card when same types', () => {
+			const hand1 = {
+				hand: '33332',
+				bid: 765,
+				type: HandType.fourOfaKind,
+			};
+			const hand2 = {
+				hand: '2AAAA',
+				bid: 765,
+				type: HandType.fourOfaKind,
+			};
+			expect(rankHands(hand1, hand2)).toBe(1);
+		});
+		it('returns 1 for bigger third card when same types', () => {
+			const hand1 = {
+				hand: '77888',
+				bid: 765,
+				type: HandType.fullHouse,
+			};
+			const hand2 = {
+				hand: '77788',
+				bid: 765,
+				type: HandType.fullHouse,
+			};
+			expect(rankHands(hand1, hand2)).toBe(1);
 		});
 	});
 	describe('part1answer', () => {

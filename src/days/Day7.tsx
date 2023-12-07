@@ -71,8 +71,6 @@ export const getHandType = (hand: string): HandType => {
 		seqs.push({ seqCard: cards[4], count: 1 });
 	}
 
-	console.log(seqs);
-
 	if (seqs.length === 1) {
 		return HandType.fiveOfaKind;
 	} else if (seqs.length === 2) {
@@ -93,6 +91,23 @@ export const getHandType = (hand: string): HandType => {
 		return HandType.highCard;
 	} else {
 		throw new Error('Unknown hand type');
+	}
+};
+
+export const rankHands = (first: Hand, second: Hand): number => {
+	if ((first.type as HandType) > (second.type as HandType)) {
+		return 1;
+	} else if ((first.type as HandType) < (second.type as HandType)) {
+		return -1;
+	} else {
+		let cardToCompare = 0;
+		while (
+			first.hand[cardToCompare] === second.hand[cardToCompare] &&
+			cardToCompare < 4
+		) {
+			cardToCompare++;
+		}
+		return first.hand[cardToCompare] > second.hand[cardToCompare] ? 1 : -1;
 	}
 };
 
