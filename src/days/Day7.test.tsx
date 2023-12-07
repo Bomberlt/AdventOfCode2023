@@ -107,6 +107,32 @@ describe('Day7', () => {
 			};
 			expect(rankHands(hand1, hand2)).toBe(1);
 		});
+		it('returns 1 for bigger first card when same types with letter and number', () => {
+			const hand1 = {
+				hand: 'AAAA2',
+				bid: 765,
+				type: HandType.fourOfaKind,
+			};
+			const hand2 = {
+				hand: '33332',
+				bid: 765,
+				type: HandType.fourOfaKind,
+			};
+			expect(rankHands(hand1, hand2)).toBe(1);
+		});
+		it('returns 1 for bigger first card when same types with letters', () => {
+			const hand1 = {
+				hand: 'AAAA2',
+				bid: 765,
+				type: HandType.fourOfaKind,
+			};
+			const hand2 = {
+				hand: 'KKKK2',
+				bid: 765,
+				type: HandType.fourOfaKind,
+			};
+			expect(rankHands(hand1, hand2)).toBe(1);
+		});
 	});
 	describe('part1answer', () => {
 		it('returns 6440 for sample data', () => {

@@ -99,20 +99,49 @@ export const rankHands = (first: Hand, second: Hand): number => {
 		return 1;
 	} else if ((first.type as HandType) < (second.type as HandType)) {
 		return -1;
-	} else {
-		let cardToCompare = 0;
-		while (
-			first.hand[cardToCompare] === second.hand[cardToCompare] &&
-			cardToCompare < 4
-		) {
-			cardToCompare++;
-		}
-		return first.hand[cardToCompare] > second.hand[cardToCompare] ? 1 : -1;
 	}
+
+	let cardToCompare = 0;
+	while (
+		first.hand[cardToCompare] === second.hand[cardToCompare] &&
+		cardToCompare < 4
+	) {
+		cardToCompare++;
+	}
+	const firstCard =
+		first.hand[cardToCompare] === 'T' ? '10' : first.hand[cardToCompare];
+	const secondCard =
+		second.hand[cardToCompare] === 'T' ? '10' : second.hand[cardToCompare];
+	if (isNaN(parseInt(firstCard)) && isNaN(parseInt(secondCard))) {
+		// 'A' and 'J'
+		if (firstCard === 'A' || secondCard === 'J') {
+			return 1;
+		} else if (secondCard === 'A' || firstCard === 'J') {
+			return -1;
+		}
+
+		// 'K', 'Q'
+		if (firstCard === 'K') {
+			return 1;
+		} else {
+			return -1;
+		}
+	}
+
+	return firstCard > secondCard ? 1 : -1;
 };
 
 export const part1answer = (input: string): number => {
-	return 6440;
+	const hands = readHands(input);
+	const handsWithType = hands.map((hand) => ({
+		...hand,
+		type: getHandType(hand.hand),
+	}));
+	const rankedHands = handsWithType.sort((a, b) => rankHands(a, b));
+	const handsWinnings = rankedHands.map((hand, i) => hand.bid * (i + 1));
+	console.log('rankedHands', rankedHands);
+	console.log('handsWinnings', handsWinnings);
+	return handsWinnings.reduce((acc, winning) => acc + winning, 0);
 };
 
 export const part2answer = (input: string): number => {
