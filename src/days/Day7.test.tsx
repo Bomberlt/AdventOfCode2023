@@ -1,6 +1,7 @@
 import {
 	HandType,
 	getHandType,
+	getHandTypeWithJokerRule,
 	part1answer,
 	part2answer,
 	rankHands,
@@ -150,6 +151,26 @@ describe('Day7', () => {
 	describe('part1answer', () => {
 		it('returns 6440 for sample data', () => {
 			expect(part1answer(sampleInput)).toBe(6440);
+		});
+	});
+
+	describe('getHandTypeWithJokerRule', () => {
+		it('returns onePair for first sample hand 32T3K', () => {
+			expect(getHandTypeWithJokerRule(sampleHands[0].hand)).toBe(
+				HandType.onePair
+			);
+		});
+		it('returns four of a kind for T55J5 ', () => {
+			expect(getHandTypeWithJokerRule('T55J5')).toBe(HandType.fourOfaKind);
+		});
+		it('returns four of a kind for KTJJT ', () => {
+			expect(getHandTypeWithJokerRule('KTJJT')).toBe(HandType.fourOfaKind);
+		});
+	});
+
+	describe('part2answer', () => {
+		it('returns 5905 for sample data', () => {
+			expect(part2answer(sampleInput)).toBe(5905);
 		});
 	});
 });
