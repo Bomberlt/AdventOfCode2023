@@ -120,6 +120,19 @@ describe('Day7', () => {
 			};
 			expect(rankHands(hand1, hand2)).toBe(1);
 		});
+		it('returns 1 for bigger first card when same types with letter T and number', () => {
+			const hand1 = {
+				hand: 'TTTT2',
+				bid: 765,
+				type: HandType.fourOfaKind,
+			};
+			const hand2 = {
+				hand: '33332',
+				bid: 765,
+				type: HandType.fourOfaKind,
+			};
+			expect(rankHands(hand1, hand2)).toBe(1);
+		});
 		it('returns 1 for bigger first card when same types with letters', () => {
 			const hand1 = {
 				hand: 'AAAA2',

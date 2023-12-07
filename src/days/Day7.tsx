@@ -108,11 +108,14 @@ export const rankHands = (first: Hand, second: Hand): number => {
 	) {
 		cardToCompare++;
 	}
-	const firstCard =
-		first.hand[cardToCompare] === 'T' ? '10' : first.hand[cardToCompare];
-	const secondCard =
-		second.hand[cardToCompare] === 'T' ? '10' : second.hand[cardToCompare];
-	if (isNaN(parseInt(firstCard)) && isNaN(parseInt(secondCard))) {
+	const firstCard = first.hand[cardToCompare];
+	const secondCard = second.hand[cardToCompare];
+	if (
+		isNaN(parseInt(firstCard)) &&
+		firstCard !== 'T' &&
+		isNaN(parseInt(secondCard)) &&
+		secondCard !== 'T'
+	) {
 		// 'A' and 'J'
 		if (firstCard === 'A' || secondCard === 'J') {
 			return 1;
@@ -120,7 +123,7 @@ export const rankHands = (first: Hand, second: Hand): number => {
 			return -1;
 		}
 
-		// 'K', 'Q'
+		// 'K' and 'Q'
 		if (firstCard === 'K') {
 			return 1;
 		} else {
@@ -128,6 +131,12 @@ export const rankHands = (first: Hand, second: Hand): number => {
 		}
 	}
 
+	// 'T' and letter
+	if (isNaN(parseInt(firstCard)) && isNaN(parseInt(secondCard))) {
+		return firstCard === 'T' ? -1 : 1;
+	}
+
+	// number and number or letter and number
 	return firstCard > secondCard ? 1 : -1;
 };
 
@@ -170,10 +179,10 @@ const Day7 = () => {
 			>
 				<div className='container'>
 					<div className='container-rows'>
-						<div>ist of hands: </div>
+						<div>List of hands: </div>
 						<div className='document' style={{ display: 'block' }}>
 							{dayInput.split('\n').map((line, i) => (
-								<div key={i}>{line}</div>
+								<span key={i}>{line}; </span>
 							))}
 						</div>
 					</div>
