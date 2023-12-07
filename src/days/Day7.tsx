@@ -2,6 +2,100 @@ import { useState } from 'react';
 import { input as dayInput } from '../inputs/day7input.ts';
 import Day from './Day.tsx';
 
+export enum HandType {
+	highCard = 0,
+	onePair,
+	twoPair,
+	threeOfaKind,
+	fullHouse,
+	fourOfaKind,
+	fiveOfaKind,
+}
+
+export interface Hand {
+	hand: string;
+	bid: number;
+	type?: HandType;
+	rank?: number;
+}
+
+export const readHands = (input: string): Hand[] => {
+	const lines = input.split('\n');
+	return lines.map((line) => {
+		const [hand, bid] = line.split(' ');
+		return {
+			hand,
+			bid: parseInt(bid),
+		};
+	});
+};
+
+export interface Seq {
+	seqCard: string;
+	count: number;
+}
+
+export const getHandType = (hand: string): HandType => {
+	const cards = hand.split('');
+	// First card
+	const seqs: Seq[] = [{ seqCard: cards[0], count: 1 }];
+
+	// Second card
+	if (cards[1] === seqs[0].seqCard) {
+		seqs[0].count++;
+	} else {
+		seqs.push({ seqCard: cards[1], count: 1 });
+	}
+
+	// Third card
+	let lastSeq = seqs.find((seq) => seq.seqCard === cards[2]);
+	if (lastSeq) {
+		lastSeq.count++;
+	} else {
+		seqs.push({ seqCard: cards[2], count: 1 });
+	}
+
+	// Fourth card
+	lastSeq = seqs.find((seq) => seq.seqCard === cards[3]);
+	if (lastSeq) {
+		lastSeq.count++;
+	} else {
+		seqs.push({ seqCard: cards[3], count: 1 });
+	}
+
+	// Fifth card
+	lastSeq = seqs.find((seq) => seq.seqCard === cards[4]);
+	if (lastSeq) {
+		lastSeq.count++;
+	} else {
+		seqs.push({ seqCard: cards[4], count: 1 });
+	}
+
+	console.log(seqs);
+
+	if (seqs.length === 1) {
+		return HandType.fiveOfaKind;
+	} else if (seqs.length === 2) {
+		if (seqs.some((seq) => seq.count === 4)) {
+			return HandType.fourOfaKind;
+		} else {
+			return HandType.fullHouse;
+		}
+	} else if (seqs.length === 3) {
+		if (seqs.some((seq) => seq.count === 3)) {
+			return HandType.threeOfaKind;
+		} else {
+			return HandType.twoPair;
+		}
+	} else if (seqs.length === 4) {
+		return HandType.onePair;
+	} else if (seqs.length === 5) {
+		return HandType.highCard;
+	} else {
+		throw new Error('Unknown hand type');
+	}
+};
+
 export const part1answer = (input: string): number => {
 	return 6440;
 };
